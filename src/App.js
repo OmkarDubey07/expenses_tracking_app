@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Expenses from './components/Expenses/Expenses';
+import NewExpense from './components/NewExpenses/NewExpense';
 
 const App = () => {
     // let expenseDate = new Date(2022,6,18);
@@ -37,6 +38,7 @@ const App = () => {
     return(
         <div>
             <h2>Expense Tracking</h2>
+            <NewExpense />
             <Expenses item = { expenses } />
 
         </div>
