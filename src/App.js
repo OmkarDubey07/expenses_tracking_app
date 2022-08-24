@@ -1,39 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 
 import Expenses from './components/Expenses/Expenses';
 import NewExpense from './components/NewExpenses/NewExpense';
 
 
-let DUMMY_EXPENSE = [
-    {
-        id: 'e1',
-        title: 'School Fee',
-        amount: 250,
-        date: new Date(2022, 6, 18)
-    },
-    {
-        id: 'e2',
-        title: 'Mobile bill',
-        amount: 2500,
-        date: new Date(2022, 5, 18)
-    },
-    {
-        id: 'e3',
-        title: 'Electric bill',
-        amount: 3500,
-        date: new Date(2022, 7, 18)
-    },
-    {
-        id: 'e4',
-        title: 'Books',
-        amount: 200,
-        date: new Date(2022, 4, 18)
-    }
-];
+let DUMMY_EXPENSE = [];
 
 const App = () => {
 
     const [expenses , setExpenses] = useState(DUMMY_EXPENSE);
+
+    useEffect(() =>{
+        
+        fetch('http://localhost/sample-api/api/read.php').then(
+        response => {
+            return response.json();
+        }
+        ).then(
+        data => {
+            console.log(data);
+            setExpenses(data);
+        }
+    );
+    } , []);
+
+    
+
 
     const addExpenseHandler = (expense) => {
         const updatedExpense = [expense , ...expenses];
