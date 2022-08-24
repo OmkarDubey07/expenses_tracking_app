@@ -8,28 +8,42 @@ let DUMMY_EXPENSE = [];
 
 const App = () => {
 
+
+
     const [expenses , setExpenses] = useState(DUMMY_EXPENSE);
 
-    useEffect(() =>{
-        
+    function fetchData(){
         fetch('http://localhost/sample-api/api/read.php').then(
-        response => {
-            return response.json();
-        }
-        ).then(
-        data => {
-            console.log(data);
-            setExpenses(data);
-        }
-    );
+            response => {
+                return response.json();
+            }
+            ).then(
+            data => {
+                console.log(data);
+                setExpenses(data);
+            }
+            );
+    } 
+
+    useEffect(() =>{
+        fetchData();
     } , []);
 
     
 
 
     const addExpenseHandler = (expense) => {
-        const updatedExpense = [expense , ...expenses];
-        setExpenses(updatedExpense);
+        fetch('http://localhost/sample-api/api/create.php' , {
+            method : 'POSt' ,
+            body: JSON.stringify(expense) , 
+            headers :{
+                'content-type' : 'application/json'
+            }
+        }).then(
+            response => {
+                fetchData();
+            }
+        );
     };
 
 
